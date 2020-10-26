@@ -1,0 +1,23 @@
+.side-bar,.menu-container{
+    display: flex;
+    flex-direction: column;
+    background: lightslategrey;
+    height: 100vh;
+    width: 30%;
+    padding: 10px;
+}
+.menu-container{
+    background: #ccc;
+    height: fit-content;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 100%;
+}
+.nav-links{
+    margin-top: 10px;
+    border-bottom: 1px solid lightslategrey;
+    padding-bottom: 5px;
+}
+.side-bar-title{
+    font-size: 3vw;
+}

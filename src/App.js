@@ -1,25 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import BookmarkContext from './BookmarkContext';
+import AddBookmark from './components/AddBookmark/AddBookmark';
+import BookmarkConatiner from './components/BookmarkContainer/BookmarkContainer';
+import DisplayBookmarks from './components/DisplayBookmarks/DisplayBookmarks';
+import SideBar from './components/SideBar/SideBar';
+import UpdateBookmark from './components/UpdateBookmark/UpdateBookmark';
 
 function App() {
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState([]);
+  const [displayData, setDisplayData] = useState(false);
+  const [toUpdate, setToUpdate] = useState([])
+  const [showUpdate, setShowUpdate] = useState(false);
+  useEffect(()=>{
+    setLoading(true);
+    fetch("/api/bookmarks")
+    .then(res=> res.json())
+    .then(res=> setData(res))
+  },[])
+
+  const updateBookmark =(id)=>{
+    const isThere = toUpdate.find(bookmark => bookmark._id === id );
+    if(isThere){
+      alert("Bookmark already added")
+      return
+    }
+    data.filter(bookmark => bookmark._id === id && setToUpdate([bookmark]));
+    setShowUpdate(true)
+    
+}
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BookmarkContext.Provider value={{data, setData, setError, updateBookmark,toUpdate, setToUpdate,setShowUpdate}}>
+      <main>
+      <Router>
+      <SideBar />
+        <div className="App">
+        <h1>Bookmark Storage App</h1>
+          <Route path="/" exact component={AddBookmark} />
+          <Route path="/display" exact component={BookmarkConatiner} />
+          <Route path="/update/:id" exact component={UpdateBookmark} /> 
+         
+        </div>
+        
+        
+      </Router>
+      </main>
+    </BookmarkContext.Provider>
   );
 }
 

@@ -1,0 +1,25 @@
+.name-update,
+.link-update,
+.category-update{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+}
+.name-update{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.remove-all{
+   background: crimson;
+   color: #fff;
+   font-weight: bold;
+   font-size: 1.5rem;
+   padding: 10px;
+   height: auto; 
+   margin-top: 30px;
+   transition: all 0.3s ease;
+}
+.remove-all:hover{
+    background: rgb(223, 78, 107);
+}
